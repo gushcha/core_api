@@ -39,6 +39,34 @@ ufw allow 6443/tcp
 
 ---
 
+## Step 0 — Add external hostname to k3s TLS certificate (run once)
+
+By default k3s only issues a certificate valid for internal names (`localhost`, `kubernetes`, etc.).
+GitHub Actions connects from outside using the public hostname, so we need to add it as a SAN.
+
+```bash
+# On the control plane
+mkdir -p /etc/rancher/k3s
+cat >> /etc/rancher/k3s/config.yaml << 'EOF'
+tls-san:
+  - static.190.25.233.167.clients.your-server.de
+EOF
+
+rm -f /var/lib/rancher/k3s/server/tls/dynamic-cert.json
+systemctl restart k3s
+
+# Wait ~10s then verify the cluster is healthy
+kubectl get nodes
+```
+
+When running `kubectl` directly on the server, always use the local kubeconfig so TLS resolves via `127.0.0.1`:
+
+```bash
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+```
+
+---
+
 ## Step 1 — Bootstrap the cluster (run once on the control plane)
 
 SSH into the control plane and run all commands as root or with sudo.

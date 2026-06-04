@@ -4,10 +4,10 @@ metadata:
   name: core-api
   namespace: core-api
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: core-api
   ports:
     - protocol: TCP
-      port: 80
+      port: 3000
       targetPort: 3000
