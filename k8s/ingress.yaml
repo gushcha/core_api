@@ -3,12 +3,14 @@ kind: Ingress
 metadata:
   name: core-api
   namespace: core-api
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: core-api-strip-core-api-prefix@kubernetescrd
 spec:
   ingressClassName: traefik
   rules:
     - http:
         paths:
-          - path: /
+          - path: /core-api
             pathType: Prefix
             backend:
               service:

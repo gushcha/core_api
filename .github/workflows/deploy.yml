@@ -72,5 +72,6 @@ jobs:
           export KUBECONFIG=/tmp/kubeconfig
           kubectl apply -f k8s/deployment.yaml
           kubectl apply -f k8s/service.yaml
+          kubectl apply -f k8s/middleware.yaml
           kubectl apply -f k8s/ingress.yaml
           kubectl rollout status deployment/core-api -n core-api --timeout=120s
