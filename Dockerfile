@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
     cmake \
     build-essential \
     libssl-dev \
+    libcurl4-openssl-dev \
     pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
