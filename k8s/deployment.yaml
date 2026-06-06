@@ -36,6 +36,9 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
+          env:
+            - name: KAFKA_BROKERS
+              value: "kafka.kafka.svc.cluster.local:9092"
           resources:
             requests:
               cpu: "50m"
